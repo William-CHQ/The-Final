@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienestar Educativo AI</title>
-    <!-- Agregar estilos básicos -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,22 +56,11 @@
             background-color: #45a049;
         }
 
-        select {
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #333;
-        }
-
-        #google_translate_element {
-            margin-top: 20px;
-        }
-
         .qr-section {
             text-align: center;
             margin-top: 30px;
         }
-        
+
         .chat-section, .resources-section, .parking-lot-section {
             margin-top: 30px;
             background-color: #ffffff;
@@ -89,20 +77,38 @@
             background-color: #007bb5;
         }
 
+        .chat-box {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            overflow-y: scroll;
+            margin-top: 10px;
+        }
+
+        .chat-box .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .chat-box .user-message {
+            background-color: #d1e7ff;
+            text-align: right;
+        }
+
+        .chat-box .bot-message {
+            background-color: #e6e6e6;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Language Selector -->
-    <div style="position: absolute; top: 20px; right: 20px;">
-        <select id="languageSelect" onchange="changeLanguage(event)">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="kaq">Kaqchikel</option>
-            <option value="quc">Q'eqchi'</option>
-            <option value="tzm">Tzutujil</option>
-        </select>
-    </div>
 
+    <!-- Header -->
     <header>
         <h1>Bienestar Educativo AI</h1>
         <p>Asistencia en salud mental para docentes y estudiantes</p>
@@ -111,7 +117,7 @@
     <!-- QR Code Section -->
     <div class="qr-section">
         <p><strong>Escanea el código para acceder rápidamente al sitio:</strong></p>
-        <img src="https://www.qr-code-generator.com/wp-content/themes/qr/new_structure2/assets/media/images/qr-code.svg" alt="QR Code">
+        <img src="https://www.qr-code-generator.com/wp-content/themes/qr/new_structure2/assets/media/images/qr-code.svg" alt="QR Code" width="200">
     </div>
 
     <!-- Chatbot AI Section -->
@@ -119,19 +125,31 @@
         <h2>Asistencia AI Multilingüe</h2>
         <p>Resuelve tus dudas en tiempo real en varios idiomas.</p>
         <button onclick="openChatbot()">Abrir Chatbot</button>
+        <div id="chat-box" class="chat-box" style="display: none;">
+            <div id="chat-messages"></div>
+            <textarea id="user-input" placeholder="Escribe aquí..." rows="2" style="width: 100%;"></textarea>
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
     </div>
 
     <!-- Recursos de Salud Mental -->
     <div class="resources-section">
         <h2>Recursos de Salud Mental</h2>
         <p>Explora guías y herramientas para mejorar el bienestar emocional.</p>
-        <button onclick="viewResources()">Ver Recursos</button>
+        <button onclick="openResources()">Ver Recursos</button>
+        <div id="resources-content" style="display: none; margin-top: 20px;">
+            <ul>
+                <li><a href="#">Guía de manejo de estrés</a></li>
+                <li><a href="#">Técnicas de relajación</a></li>
+                <li><a href="#">Consejos para mejorar el bienestar emocional</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- Parking Lot y Feedback Section -->
     <div class="parking-lot-section">
         <h2>Déjanos tus Comentarios</h2>
-        <form id="feedbackForm" onsubmit="return validateForm(event)">
+        <form onsubmit="return validateForm(event)">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
 
@@ -145,59 +163,57 @@
         </form>
     </div>
 
-    <!-- Google Translate Widget -->
-    <div id="google_translate_element"></div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Bienestar Educativo AI. Todos los derechos reservados.</p>
     </footer>
 
     <!-- Scripts -->
-    <script type="text/javascript">
-        // Change language handler
-        function changeLanguage(event) {
-            const language = event.target.value;
-            // Aquí deberías cargar un archivo de traducción para cambiar el idioma de la página
-            console.log('Language changed to:', language);
-        }
-
-        // Open chatbot simulated
+    <script>
         function openChatbot() {
-            alert("Chatbot Abierto!");
-            // Aquí puedes integrar tu chatbot real usando alguna API de chatbot como Dialogflow
+            document.getElementById("chat-box").style.display = "block";
+            document.getElementById("chat-messages").innerHTML = "<div class='message bot-message'>¡Hola! ¿En qué puedo ayudarte hoy?</div>";
         }
 
-        // View mental health resources simulated
-        function viewResources() {
-            alert("Accediendo a los recursos de salud mental...");
-            // Redirige a una página real de recursos
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            if (userInput.trim() === "") return;
+
+            // Mostrar el mensaje del usuario
+            var userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user-message");
+            userMessage.textContent = userInput;
+            document.getElementById("chat-messages").appendChild(userMessage);
+
+            // Respuesta automática del bot
+            var botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot-message");
+            botMessage.textContent = "Gracias por tu mensaje. Estamos aquí para ayudarte.";
+            document.getElementById("chat-messages").appendChild(botMessage);
+
+            // Limpiar el campo de entrada
+            document.getElementById("user-input").value = "";
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
         }
 
-        // Form validation before submission
+        function openResources() {
+            document.getElementById("resources-content").style.display = "block";
+        }
+
         function validateForm(event) {
-            event.preventDefault();  // Prevenir el comportamiento por defecto de envío del formulario
+            event.preventDefault(); // Prevenir el comportamiento por defecto
             let name = document.getElementById('name').value;
             let email = document.getElementById('email').value;
             let feedback = document.getElementById('feedback').value;
 
             if (name && email && feedback) {
                 alert("¡Gracias por tus comentarios!");
-                // Aquí puedes implementar el envío real del formulario, por ejemplo, almacenarlo o enviarlo por correo
-                document.getElementById('feedbackForm').reset();
+                document.querySelector('form').reset();
             } else {
                 alert("Por favor, completa todos los campos.");
             }
         }
-
-        // Cargar el widget de Google Translate
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'es',
-                includedLanguages: 'es,en,kaq,quc,tzm'
-            }, 'google_translate_element');
-        }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
