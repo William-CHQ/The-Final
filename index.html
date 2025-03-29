@@ -1,116 +1,81 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienestar Educativo AI</title>
-</head>
-<body>
-    <header>
-        <h1>Bienestar Educativo AI</h1>
-        <p>Asistencia en salud mental para docentes y estudiantes</p>
-    </header>
-    <section>
-        <h2>Recursos de Salud Mental</h2>
-        <p>Explora guías y herramientas para mejorar el bienestar emocional.</p>
-    </section>
-    <footer>
-        <p>© 2025 Bienestar Educativo AI</p>
-    </footer>
-</body>
-</html>
-<section>
-    <h2>Deja tus comentarios</h2>
-    <form action="#" method="POST">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { QRCodeCanvas } from "qrcode.react";
+import { useState } from "react";
+import { MotionDiv } from "framer-motion";
+import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required>
+export default function WebsitePrototype() {
+  const [feedback, setFeedback] = useState("");
+  const { t, i18n } = useTranslation();
 
-        <label for="message">Mensaje:</label>
-        <textarea id="message" name="message" required></textarea>
+  return (
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white flex flex-col items-center p-6">
+      {/* Language Selector */}
+      <div className="absolute top-4 right-4">
+        <select onChange={(e) => i18n.changeLanguage(e.target.value)} className="p-2 rounded bg-white text-black">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="kaq">Kaqchikel</option>
+          <option value="quc">Q'eqchi'</option>
+          <option value="tzj">Tz'utujil</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="zh">中文</option>
+        </select>
+      </div>
+      
+      {/* Header */}
+      <header className="text-center py-6">
+        <h1 className="text-4xl font-bold">{t("Bienestar Educativo AI")}</h1>
+        <p className="mt-2 text-lg">{t("Asistencia en salud mental para docentes y estudiantes")}</p>
+      </header>
+      
+      {/* QR Code */}
+      <Card className="p-4 bg-white text-black rounded-xl shadow-lg mb-6">
+        <CardContent className="flex flex-col items-center">
+          <p className="font-semibold mb-2">{t("Escanea para acceder:")}</p>
+          <QRCodeCanvas value="https://tu-sitio-web.com" size={128} />
+        </CardContent>
+      </Card>
 
-        <button type="submit">Enviar</button>
-    </form>
-</section>
-<nav>
-    <ul>
-        <li><a href="#home">Inicio</a></li>
-        <li><a href="#resources">Recursos</a></li>
-        <li><a href="#feedback">Comentarios</a></li>
-    </ul>
-</nav>
-<div id="google_translate_element"></div>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'es',
-            includedLanguages: 'en,fr,kaq,quc'
-        }, 'google_translate_element');
-    }
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<section id="chatbot">
-    <h2>Asistencia AI</h2>
-    <button onclick="openChatbot()">Abrir Chatbot</button>
-</section>
+      {/* Chatbot AI Multilingüe */}
+      <Card className="p-6 bg-white text-black rounded-xl shadow-lg mb-6 w-full max-w-md">
+        <CardContent>
+          <Image src="/chatbot.png" alt="Chatbot AI" width={400} height={200} className="rounded" />
+          <h2 className="text-xl font-semibold mb-2">{t("Asistencia AI Multilingüe")}</h2>
+          <p className="text-sm">{t("Resuelve dudas en tiempo real en varios idiomas.")}</p>
+          <Button className="mt-4 w-full">{t("Abrir Chatbot")}</Button>
+        </CardContent>
+      </Card>
+      
+      {/* Recursos de Salud Mental */}
+      <Card className="p-6 bg-white text-black rounded-xl shadow-lg mb-6 w-full max-w-md">
+        <CardContent>
+          <Image src="/mental-health.png" alt="Recursos de Salud Mental" width={400} height={200} className="rounded" />
+          <h2 className="text-xl font-semibold mb-2">{t("Recursos de Salud Mental")}</h2>
+          <p className="text-sm">{t("Explora guías y herramientas para mejorar el bienestar emocional.")}</p>
+          <Button className="mt-4 w-full">{t("Ver Recursos")}</Button>
+        </CardContent>
+      </Card>
 
-<script>
-    function openChatbot() {
-        // Lógica para abrir el chatbot
-        alert("Chatbot Abierto!");
-    }
-</script>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-
-    header {
-        background-color: #4CAF50;
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
-
-    footer {
-        background-color: #4CAF50;
-        color: white;
-        text-align: center;
-        padding: 10px;
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    input, textarea {
-        padding: 10px;
-        margin: 5px 0;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-    }
-
-    button {
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
+      {/* Parking Lot y Feedback */}
+      <Card className="p-6 bg-white text-black rounded-xl shadow-lg w-full max-w-md">
+        <CardContent>
+          <h2 className="text-xl font-semibold mb-2">{t("Parking Lot y Encuestas")}</h2>
+          <p className="text-sm">{t("Déjanos tus comentarios o dudas:")}</p>
+          <Textarea
+            className="mt-2 w-full"
+            placeholder={t("Escribe aquí tu opinión...")}
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+          />
+          <Button className="mt-4 w-full">{t("Enviar")}</Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
