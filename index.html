@@ -131,7 +131,7 @@
     <!-- Parking Lot y Feedback Section -->
     <div class="parking-lot-section">
         <h2>Déjanos tus Comentarios</h2>
-        <form id="feedbackForm">
+        <form id="feedbackForm" onsubmit="return validateForm(event)">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
 
@@ -155,20 +155,39 @@
 
     <!-- Scripts -->
     <script type="text/javascript">
+        // Change language handler
         function changeLanguage(event) {
             const language = event.target.value;
-            // Agregar lógica de cambio de idioma usando la librería i18n o similar
+            // Aquí deberías cargar un archivo de traducción para cambiar el idioma de la página
             console.log('Language changed to:', language);
         }
 
+        // Open chatbot simulated
         function openChatbot() {
             alert("Chatbot Abierto!");
-            // Aquí puedes abrir el chatbot real
+            // Aquí puedes integrar tu chatbot real usando alguna API de chatbot como Dialogflow
         }
 
+        // View mental health resources simulated
         function viewResources() {
             alert("Accediendo a los recursos de salud mental...");
-            // Aquí puedes redirigir o mostrar recursos
+            // Redirige a una página real de recursos
+        }
+
+        // Form validation before submission
+        function validateForm(event) {
+            event.preventDefault();  // Prevenir el comportamiento por defecto de envío del formulario
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let feedback = document.getElementById('feedback').value;
+
+            if (name && email && feedback) {
+                alert("¡Gracias por tus comentarios!");
+                // Aquí puedes implementar el envío real del formulario, por ejemplo, almacenarlo o enviarlo por correo
+                document.getElementById('feedbackForm').reset();
+            } else {
+                alert("Por favor, completa todos los campos.");
+            }
         }
 
         // Cargar el widget de Google Translate
